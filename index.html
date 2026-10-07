@@ -1,17 +1,792 @@
 <!DOCTYPE html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="theme-color" content="#0f1720"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Prisoner"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><title>PixelPrisoner</title><link rel="apple-touch-icon" id="icon"><style>
-*{box-sizing:border-box;margin:0;padding:0;user-select:none;-webkit-user-select:none;touch-action:manipulation}html,body{height:100%;overflow:hidden;background:#0f1720;color:#e6efd2;font-family:Menlo,Consolas,monospace}.app{height:100dvh;max-width:520px;margin:auto;padding:env(safe-area-inset-top) 12px env(safe-area-inset-bottom);display:grid;grid-template-rows:auto 1fr auto;gap:10px}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;padding-top:8px}.tab,.btn{font:800 14px Menlo,monospace;border:2px solid #43546b;border-radius:14px;background:#182230;color:#d7e3c5;padding:12px 4px;box-shadow:inset 0 -3px #0b1018}.tab.on{background:#bddf44;color:#111b0d;border-color:#e9ff8b}.screen{border-radius:30px;background:#263447;padding:12px;box-shadow:0 14px 34px #0008,inset 0 0 0 2px #3b4a60}canvas{width:100%;height:100%;display:block;border-radius:20px;background:#c6d873;image-rendering:pixelated}.bottom{display:grid;gap:8px}.explain{min-height:46px;color:#cdd9bd;font-size:12px;line-height:1.25;text-align:center}.buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.btn{min-height:66px;border:0;border-radius:24px;color:#10180d;background:linear-gradient(#e1f17a,#a7c733);box-shadow:0 7px #5d7428}.btn:nth-child(2){background:linear-gradient(#ffd178,#e3a244);box-shadow:0 7px #895a21}.btn:nth-child(3){background:linear-gradient(#f19991,#cf5750);box-shadow:0 7px #7e302b;color:white}.btn b{display:block;font-size:28px}.btn small{font-size:11px;text-transform:uppercase;letter-spacing:.06em}@media(max-height:760px){.btn{min-height:54px}.explain{font-size:11px;min-height:34px}.tab{padding:9px 3px}}
-</style></head><body><div class="app"><div class="tabs"><button class="tab on" data-c="3">Menü</button><button class="tab" data-c="0">Gramsci</button><button class="tab" data-c="1">Göring</button><button class="tab" data-c="2">Epstein</button></div><div class="screen"><canvas id="c" width="240" height="360"></canvas></div><div class="bottom"><div class="explain" id="explain"></div><div class="buttons"><button class="btn" id="a"><b>A</b><small></small></button><button class="btn" id="b"><b>B</b><small></small></button><button class="btn" id="cc"><b>C</b><small></small></button></div></div></div><script>
-const cv=document.getElementById('c'),x=cv.getContext('2d');x.imageSmoothingEnabled=false;const W=240,H=360,p={bg:'#c6d873',l:'#edf5da',m:'#9ab558',d:'#5d7f3e',x:'#10200f',a:'#e9b45a',r:'#cf5750'};let ch=3,sel=0,t=0,info=false;let g={h:76,pa:58,he:82,n:2,pr:41},n={light:5.9,po:12,cy:8},e={log:3.8,en:91,da:18,sh:0,sleep:false};function R(a,b,c,d,col){x.fillStyle=col;x.fillRect(Math.round(a),Math.round(b),Math.round(c),Math.round(d))}function T(s,a,b,z=10,col=p.x,al='left'){x.fillStyle=col;x.font='900 '+z+'px Menlo,monospace';x.textAlign=al;x.fillText(s,a,b);x.textAlign='left'}function base(){R(0,0,W,H,p.bg);for(let i=0;i<W;i+=24)R(i,0,2,H,'#b3c963');for(let j=0;j<H;j+=18)R(0,j,W,2,'#b3c963')}function human(cx,cy,k,act){let bob=Math.sin(t/18)*2;if(k==0){R(cx-21,cy-60+bob,42,14,p.x);R(cx-27,cy-49+bob,54,54,p.m);R(cx-20,cy-42+bob,40,39,p.l);R(cx-14,cy-25+bob,5,5,p.x);R(cx+10,cy-25+bob,5,5,p.x);R(cx-3,cy-17+bob,7,3,p.d);R(cx-13,cy-6+bob,26,4,p.x);R(cx-9,cy-1+bob,18,4,p.d);R(cx-34,cy+2+bob,68,78,p.d);R(cx-46,cy+18+bob,16,64,p.x);R(cx+30,cy+18+bob,16,64,p.x);R(cx-35,cy+58+bob,70,24,p.x);R(cx-25,cy+64+bob,50,14,p.l);if(act){R(cx+30,cy+36+bob,44,7,p.x);R(cx+64,cy+30+bob,8,18,p.x);T('✎',cx+76,cy+39+bob,13,p.x)}}
-if(k==1){R(cx-32,cy-62+bob,64,16,p.x);R(cx-38,cy-50+bob,76,14,p.x);R(cx-30,cy-42+bob,60,48,p.m);R(cx-22,cy-34+bob,44,34,p.l);R(cx-16,cy-18+bob,6,6,p.x);R(cx+10,cy-18+bob,6,6,p.x);R(cx-4,cy-10+bob,8,4,p.d);R(cx-22,cy+3+bob,44,5,p.x);R(cx-44,cy+18+bob,88,86,p.d);R(cx-7,cy+36+bob,14,52,p.a);R(cx-54,cy+30+bob,18,54,p.x);R(cx+36,cy+30+bob,18,54,p.x);if(act){R(cx-78,cy-70,52,8,p.l);R(cx-78,cy-70,8,96,p.l);T('LICHT',cx-84,cy-80,9,p.l)}}
-if(k==2){R(cx-24,cy-61+bob,48,12,p.x);R(cx-30,cy-51+bob,60,16,p.x);R(cx-28,cy-40+bob,56,48,p.m);R(cx-20,cy-32+bob,40,36,p.l);R(cx-14,cy-15+bob,6,6,p.x);R(cx+9,cy-15+bob,6,6,p.x);R(cx-3,cy-7+bob,7,4,p.d);R(cx-13,cy+8+bob,26,4,p.x);R(cx-44,cy+22+bob,88,92,p.d);R(cx-26,cy+62+bob,52,16,p.l);R(cx-18,cy+68+bob,36,3,p.d);R(cx-54,cy-6+bob,12,88,p.d);R(cx+42,cy-6+bob,12,88,p.d);if(act){R(cx-60,cy+52+bob,38,28,p.x);R(cx-56,cy+56+bob,30,18,p.m);T('LOG',cx-56,cy+50+bob,8,p.x)}}}
-function bar(a,b,v,l){T(l,a,b-5,9);R(a,b,72,9,p.d);R(a+2,b+2,Math.max(2,68*v/100),5,v<25?p.r:p.l)}function modal(lines){R(12,88,216,154,p.x);R(18,94,204,142,p.l);R(24,100,192,130,p.x);lines.forEach((q,i)=>T(q,120,126+i*20,i?9:12,p.l,'center'))}
-function draw(){base();if(ch==3){T('PIXEL PRISONER',120,45,21,p.x,'center');T('Wähle eine Geschichte. C zeigt Hilfe.',120,66,9,p.d,'center');['Gramsci schreibt im Gefängnis','Göring: Licht, Suche, Verhör','Epstein-Wache: Schlaf/Logbuch'].forEach((q,i)=>{let y=105+i*55;R(20,y,200,36,i==sel?p.x:p.d);R(26,y+6,188,24,i==sel?p.l:p.bg);T((i==sel?'> ':'')+q,34,y+23,9,i==sel?p.x:p.l)});human(120,287,sel,true)}
-if(ch==0){R(0,255,W,105,p.d);for(let i=28;i<220;i+=38)R(i,50,10,98,p.x);R(22,225,116,18,p.x);R(30,243,12,80,p.x);R(116,243,12,80,p.x);human(80,162,0,true);T('GRAMSCI',150,35,12);bar(150,70,g.h,'Hunger');bar(150,104,g.pa,'Papier');bar(150,138,g.he,'Gesund');bar(150,172,g.pr,'Heft');T('Hefte: '+g.n,150,210,12)}
-if(ch==1){R(0,0,W,H,p.x);R(0,0,105,360,p.bg);R(0,0,240,70,p.l);for(let i=25;i<225;i+=34)R(i,70,11,110,p.x);R(0,255,W,105,p.d);human(120,180,1,true);T('Prozess '+n.po+'%',18,32,12,n.light? p.x:p.l);T('Gift '+n.cy+'%',18,54,12,n.cy>50?p.r:p.x);T('Licht '+n.light.toFixed(1)+'h',22,328,13,p.l)}
-if(ch==2){R(119,0,3,H,p.x);R(16,54,82,215,p.d);for(let i=28;i<90;i+=19)R(i,70,8,180,p.x);R(128,80,84,56,p.x);R(134,88,72,38,p.m);R(126,142,90,10,p.x);human(168,226,2,true);T('Schicht '+e.sh,18,33,12);T('Gefahr '+e.da+'%',132,33,12);T('Log '+e.log.toFixed(1)+'h',132,56,12);T('Energie '+e.en+'%',132,326,12)}if(info)modal(help());}
-function help(){return ch==3?['HILFE','A wechselt Auswahl','B startet Geschichte','C blendet Hilfe ein/aus']:ch==0?['GRAMSCI','A Suppe: Hunger steigt','B Papier: Schreiben moeglich','C Medizin: Gesundheit steigt']:ch==1?['GOERING','A Licht erneuern','B Zelle filzen: Gift sinkt','C Verhoer: Prozess schneller']:['EPSTEIN','A Surfen: Gefahr steigt','B Schlaf: Energie steigt','C Logbuch: Frist erneuern']}
-function labels(){let L=[['Wahl','Start','Hilfe'],['Suppe','Papier','Medizin'],['Licht','Filzen','Verhör'],['Surfen','Schlaf','Logbuch']][ch==3?0:ch+1];['a','b','cc'].forEach((id,i)=>document.querySelector('#'+id+' small').textContent=L[i]);document.getElementById('explain').textContent=help().slice(1).join(' · ');document.querySelectorAll('.tab').forEach((b,i)=>b.classList.toggle('on',i==ch))}
-function go(c){ch=c;info=false;labels()}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>go(+b.dataset.c));a.onclick=()=>{if(ch==3)sel=(sel+1)%3;else if(ch==0)g.h=Math.min(100,g.h+12);else if(ch==1)n.light=6;else e.da=Math.min(100,e.da+8)};b.onclick=()=>{if(ch==3)go(sel);else if(ch==0)g.pa=Math.min(100,g.pa+14);else if(ch==1){n.cy=Math.max(0,n.cy-10)}else e.sleep=!e.sleep};cc.onclick=()=>{if(ch==3)info=!info;else if(ch==0)g.he=Math.min(100,g.he+12);else if(ch==1)n.po=Math.min(100,n.po+8);else e.log=4};setInterval(()=>{t++;g.h-=.004;g.pa-=.003;g.pr=(g.pr+.015)%100;n.light=Math.max(0,n.light-.001);e.en=Math.max(0,e.en-(e.sleep?-.01:.004));draw()},33);labels();draw();
-let ic=document.createElement('canvas');ic.width=ic.height=180;let y=ic.getContext('2d');y.fillStyle='#0f1720';y.fillRect(0,0,180,180);y.fillStyle='#c6d873';y.fillRect(24,24,132,132);y.fillStyle='#10200f';y.fillRect(50,64,80,16);y.fillRect(38,92,104,46);y.fillStyle='#edf5da';y.fillRect(62,82,18,18);y.fillRect(100,82,18,18);document.getElementById('icon').href=ic.toDataURL();
-</script></body></html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PixelPrisoner">
+<meta name="theme-color" content="#0f380f">
+<title>PixelPrisoner</title>
+<link rel="apple-touch-icon" id="touchIcon" href="">
+<link rel="icon" id="favIcon" href="">
+<style>
+:root{--c0:#0f380f;--c1:#306230;--c2:#8bac0f;--c3:#9bbc0f}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+html,body{position:fixed;inset:0;width:100%;height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none;background:var(--c0);font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;color:var(--c0)}
+body{display:flex;justify-content:center;align-items:stretch}
+.shell{position:relative;width:100%;max-width:480px;height:100%;display:flex;flex-direction:column;align-items:center;
+  padding:calc(env(safe-area-inset-top) + 10px) 14px calc(env(safe-area-inset-bottom) + 14px);
+  background:var(--c1);border-radius:0 0 46% 46% / 0 0 14% 14%;
+  box-shadow:inset 0 0 0 4px var(--c0),inset 10px 0 0 0 rgba(155,188,15,.08),inset -10px -12px 0 0 rgba(15,56,15,.35)}
+.topbar{width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.pill{appearance:none;border:2px solid var(--c0);background:var(--c2);color:var(--c0);font:800 12px/1 inherit;font-family:inherit;letter-spacing:.08em;
+  padding:9px 14px;border-radius:999px;box-shadow:0 3px 0 var(--c0);cursor:pointer}
+.pill:active{transform:translateY(3px);box-shadow:0 0 0 var(--c0)}
+.brand{font-weight:900;font-size:15px;letter-spacing:.12em;color:var(--c3);text-shadow:2px 2px 0 var(--c0)}
+.bezel{width:100%;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;background:var(--c0);border-radius:18px 18px 18px 40px;padding:10px;
+  box-shadow:0 4px 0 rgba(15,56,15,.6)}
+.lcd{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;background:var(--c3);border-radius:8px 8px 8px 30px;overflow:hidden;
+  box-shadow:inset 0 0 0 2px var(--c1),inset 3px 3px 0 4px rgba(48,98,48,.25)}
+.head{display:flex;justify-content:space-between;align-items:baseline;padding:7px 10px 5px;border-bottom:2px solid var(--c1);font-weight:900;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.head .sub{font-size:10px;color:var(--c1)}
+.stage{flex:0 0 auto;display:flex;justify-content:center;background:var(--c2);border-bottom:2px solid var(--c1);position:relative;isolation:isolate}.stage:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(15,56,15,.11) 2px 3px);opacity:.46}.stage:before{content:"";position:absolute;inset:5px;pointer-events:none;border:1px solid rgba(15,56,15,.25);z-index:1}
+canvas{position:relative;z-index:0;display:block;width:min(100%, calc(38dvh * 1.25));aspect-ratio:5/4;image-rendering:pixelated;image-rendering:crisp-edges}
+.panel{flex:1 1 auto;min-height:0;overflow:hidden;padding:7px 10px 8px;display:flex;flex-direction:column;gap:5px}
+.big{display:flex;justify-content:space-between;align-items:center;font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.04em}
+.big b{font-size:22px;line-height:1}
+.row{display:grid;grid-template-columns:78px 1fr 56px;align-items:center;gap:6px;font-size:11px;font-weight:800;text-transform:uppercase}
+.bar{height:10px;border:2px solid var(--c0);background:var(--c2);position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--c0)}
+.bar.warn i{animation:blink .6s steps(1) infinite}
+.row span:last-child{text-align:right}
+.state{font-size:11px;font-weight:800;text-transform:uppercase;color:var(--c1);min-height:13px}
+.menu{display:flex;flex-direction:column;gap:5px}
+.item{border:2px solid var(--c0);padding:6px 8px;display:flex;justify-content:space-between;align-items:center;font-weight:900;font-size:12px;text-transform:uppercase}
+.item small{font-size:10px;font-weight:800}
+.item.sel{background:var(--c0);color:var(--c3)}
+@keyframes blink{50%{opacity:.15}}
+.overlay{position:absolute;inset:0;background:var(--c3);display:none;flex-direction:column;padding:12px 12px 10px;gap:7px;overflow:auto;touch-action:pan-y}
+.overlay.on{display:flex}
+.overlay h2{font-size:15px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;border-bottom:3px solid var(--c0);padding-bottom:5px}
+.overlay p{font-size:12px;line-height:1.4;font-weight:700}
+.overlay .keys{display:grid;grid-template-columns:22px 1fr;gap:4px 8px;font-size:12px;font-weight:700;line-height:1.3}
+.overlay .keys b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--c0);color:var(--c3);font-size:11px}
+.overlay .hint{margin-top:auto;font-size:11px;font-weight:900;text-transform:uppercase;text-align:center;animation:blink 1.2s steps(1) infinite}
+.toast{position:absolute;left:10px;right:10px;top:42px;background:var(--c0);color:var(--c3);font-weight:900;font-size:12px;text-transform:uppercase;text-align:center;padding:8px;display:none;letter-spacing:.05em}
+.toast.on{display:block}
+.speaker{height:12px;flex:0 0 12px;display:flex;justify-content:center;align-items:center;gap:6px;margin-top:7px;filter:drop-shadow(0 2px 0 var(--c0))}.speaker i{width:4px;height:4px;border-radius:50%;background:var(--c0);box-shadow:inset 1px 1px 0 rgba(155,188,15,.35)}
+.controls{width:100%;flex:0 0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 6px 0}
+.key{display:flex;flex-direction:column;align-items:center;gap:7px}
+.key:nth-child(2){transform:translateY(12px)}
+.btn{appearance:none;width:min(21vw,78px);height:min(21vw,78px);border-radius:50%;border:3px solid var(--c0);
+  background:radial-gradient(circle at 35% 30%,var(--c3) 0 18%,var(--c2) 19% 62%,var(--c1) 63%);
+  box-shadow:0 7px 0 var(--c0),inset 0 -4px 0 rgba(15,56,15,.35);color:var(--c0);font:900 22px/1 inherit;font-family:inherit;cursor:pointer;touch-action:manipulation}
+.btn.press{transform:translateY(6px);box-shadow:0 1px 0 var(--c0),inset 0 -2px 0 rgba(15,56,15,.35)}
+.btn.active{background:radial-gradient(circle at 35% 30%,var(--c2) 0 18%,var(--c1) 19% 62%,var(--c0) 63%);color:var(--c3)}
+.lab{font-weight:900;font-size:12px;letter-spacing:.08em;color:var(--c3);text-shadow:1px 1px 0 var(--c0);text-transform:uppercase;min-height:14px}
+@media (max-height:700px){.controls{padding-top:10px}.btn{width:min(17vw,62px);height:min(17vw,62px)}.row{font-size:10px}.panel{gap:3px}canvas{width:min(100%, calc(34dvh * 1.25))}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <button class="pill" id="menuBtn">MENÜ</button>
+    <div class="brand">PIXELPRISONER</div>
+    <button class="pill" id="infoBtn">INFO</button>
+  </div>
+  <div class="bezel">
+    <div class="lcd">
+      <div class="head"><span id="title">PixelPrisoner</span><span class="sub" id="subtitle"></span></div>
+      <div class="stage"><canvas id="screen" width="160" height="128"></canvas></div>
+      <div class="panel" id="panel"></div>
+      <div class="toast" id="toast"></div>
+      <div class="overlay" id="overlay"></div>
+    </div>
+  </div>
+  <div class="speaker" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="controls">
+    <div class="key"><button class="btn" id="bA">A</button><span class="lab" id="lA"></span></div>
+    <div class="key"><button class="btn" id="bB">B</button><span class="lab" id="lB"></span></div>
+    <div class="key"><button class="btn" id="bC">C</button><span class="lab" id="lC"></span></div>
+  </div>
+</div>
+<script id="game">
+'use strict';
+/* ================= Konstanten ================= */
+const H = 3600;
+const PAL = ['#0f380f', '#306230', '#8bac0f', '#9bbc0f'];
+const SAVE_KEY = 'pixelprisoner_v4';
+const CFG = {
+  g: { decay: 8 * H, healthDecay: 16 * H, paperUse: 10 * H, heft: 6 * H },
+  n: { light: 6 * H, campaign: 336 * H, verhoerCd: 1 * H, verhoerGain: 6 * H },
+  e: { log: 4 * H, energy: 6 * H, shift: 72 * H, logCd: 1 * H }
+};
+const NAMES = ['Cellmate', 'The Nuremberg Nightshift', '29 Minutes Later'];
+const PLACES = ['Turi, 1928', 'Nürnberg, 1946', 'New York, MCC, 2019'];
+
+/* ================= Zustand ================= */
+function newG() { return { hunger: 100, paper: 80, health: 100, progress: 0, hefte: 0, best: 0, over: false, started: false }; }
+function newN() { return { light: CFG.n.light, cyanide: 0, campaign: 0, verhoerCd: 0, over: false, won: false, started: false }; }
+function newE() { return { log: CFG.e.log, energy: 100, danger: 5, shift: 0, shifts: 0, best: 0, mode: 'wach', logCd: 0, over: false, reason: '', started: false }; }
+let S = { ch: -1, sel: 0, g: newG(), n: newN(), e: newE(), seen: [false, false, false] };
+let fx = { kind: '', t: 0 };       // Aktions-Animation
+let popup = null;                   // {html, onClose}
+let tick = 0;
+
+/* ================= Simulation ================= */
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+function stepG(g, dt) {
+  if (!g.started || g.over) return;
+  g.hunger = clamp(g.hunger - 100 / CFG.g.decay * dt, 0, 100);
+  const hd = (g.hunger < 20 ? 3 : 1) * 100 / CFG.g.healthDecay;
+  g.health = clamp(g.health - hd * dt, 0, 100);
+  if (g.paper > 0) {
+    g.paper = clamp(g.paper - 100 / CFG.g.paperUse * dt, 0, 100);
+    if (g.paper > 10) {
+      const speed = g.health < 30 ? 0.5 : 1;
+      g.progress += 100 / CFG.g.heft * dt * speed;
+      while (g.progress >= 100) { g.progress -= 100; g.hefte++; g.best = Math.max(g.best, g.hefte); if (typeof onEvent === 'function') onEvent('heft'); }
+    }
+  }
+  if (g.hunger <= 0 || g.health <= 0) { g.over = true; g.best = Math.max(g.best, g.hefte); }
+}
+function stepN(n, dt) {
+  if (!n.started || n.over) return;
+  n.light = Math.max(0, n.light - dt);
+  n.verhoerCd = Math.max(0, n.verhoerCd - dt);
+  if (n.light <= 0) n.cyanide += 15 / H * dt;      // Dunkelheit: +15 %/h
+  else { n.cyanide += 2 / H * dt; n.campaign += dt; } // kontrolliert: Prozess läuft
+  n.cyanide = clamp(n.cyanide, 0, 100);
+  if (n.cyanide >= 100) { n.over = true; n.won = false; }
+  else if (n.campaign >= CFG.n.campaign) { n.campaign = CFG.n.campaign; n.over = true; n.won = true; }
+}
+function stepE(e, dt) {
+  if (!e.started || e.over) return;
+  e.log = Math.max(0, e.log - dt);
+  e.logCd = Math.max(0, e.logCd - dt);
+  if (e.mode === 'schlafen') { e.energy += 50 / H * dt; e.danger += 20 / H * dt; }
+  else if (e.mode === 'surfen') { e.energy += 25 / H * dt; e.danger += 10 / H * dt; }
+  else { e.energy -= 100 / CFG.e.energy * dt; e.danger += 2 / H * dt; }
+  e.energy = clamp(e.energy, 0, 100); e.danger = clamp(e.danger, 0, 100);
+  if (e.log <= 0) { e.over = true; e.reason = 'log'; }
+  else if (e.energy <= 0) { e.over = true; e.reason = 'energie'; }
+  else if (e.danger >= 100) { e.over = true; e.reason = 'gefahr'; }
+  if (e.over) { e.best = Math.max(e.best, e.shifts); return; }
+  e.shift += dt;
+  while (e.shift >= CFG.e.shift) { e.shift -= CFG.e.shift; e.shifts++; e.best = Math.max(e.best, e.shifts); if (typeof onEvent === 'function') onEvent('schicht'); }
+}
+function simulate(sec) {
+  let left = Math.min(sec, 30 * 24 * H);
+  while (left > 0) { const dt = Math.min(60, left); stepG(S.g, dt); stepN(S.n, dt); stepE(S.e, dt); left -= dt; }
+}
+
+/* ================= Zeichnen ================= */
+let cx = null;
+let REMAP = [0, 1, 2, 3];
+function R(x, y, w, h, c) { if (w <= 0 || h <= 0) return; cx.fillStyle = PAL[REMAP[c]]; cx.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); }
+function P(x, y, c) { R(x, y, 1, 1, c); }
+function D(x, y, w, h, c, ph) { ph = ph || 0; for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (((x + i + y + j + ph) & 1) === 0) P(x + i, y + j, c); }
+function D4(x, y, w, h, c) { for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (((x + i) & 1) === 0 && ((y + j) & 1) === 0) P(x + i, y + j, c); }
+function SP(m, x, y, flip) {
+  for (let j = 0; j < m.length; j++) { const r = m[j], L = r.length;
+    for (let i = 0; i < L; i++) { const ch = r[i]; if (ch === '.') continue; P(flip ? x + L - 1 - i : x + i, y + j, +ch); } }
+}
+function box(x, y, w, h, fill, line) { R(x, y, w, h, line); R(x + 1, y + 1, w - 2, h - 2, fill); }
+function circle(cx0, cy0, r, c, fill) {
+  for (let y = -r; y <= r; y++) for (let x = -r; x <= r; x++) { const d = x * x + y * y;
+    if (fill ? d <= r * r : (d <= r * r && d > (r - 1) * (r - 1))) P(cx0 + x, cy0 + y, c); }
+}
+
+/* ---------- Sprites (0 dunkelst … 3 hellst, . transparent) ---------- */
+const GR_HEAD = [
+  '....000000....',
+  '...00000000...',
+  '..0000000000..',
+  '.000000000000.',
+  '00000000000000',
+  '00000000333300',
+  '00000003333300',
+  '00000033333300',
+  '00000333333300',
+  '00003333333300',
+  '00003333333300',
+  '00003333333300',
+  '.000333333300.',
+  '..0003333300..',
+  '...00033300...',
+  '....000000....'
+];
+const GR_BODY = [
+  '....00000000..',
+  '..00111111330.',
+  '.0111111113330',
+  '01111111111300',
+  '01211111111110',
+  '01211111111110',
+  '01211111111110',
+  '01211111111110',
+  '01211111111110',
+  '0121111111110.',
+  '0111111111110.',
+  '0111111111110.',
+  '0111111111110.',
+  '00000000000000'
+];
+const GO_HEAD = [
+  '....000000....',
+  '..0011111100..',
+  '.011111111110.',
+  '.011333333110.',
+  '03333333333330',
+  '03000333300030',
+  '03303333330330',
+  '03333311333330',
+  '03333333333330',
+  '03333000033330',
+  '03333333333330',
+  '.033333333330.',
+  '.003333333300.',
+  '...00333300...'
+];
+const EP_HEAD = [
+  '.....00000000.....',
+  '...000000000000...',
+  '..00000000000000..',
+  '.0003333333333000.',
+  '.0033333333333300.',
+  '.0333333333333330.',
+  '.0333033333303330.',
+  '.0333003330033300.',
+  '.0333333333333330.',
+  '.0333333133333330.',
+  '.0333333313333330.',
+  '.0333311111111330.',
+  '.0333333333333330.',
+  '..00333333333300..',
+  '...003333333300...',
+  '....00000000......'
+];
+const GU_HEAD = [   // Wärter, Blick nach links, Dienstmütze
+  '...00000000..',
+  '..0111111110.',
+  '.01111311110.',
+  '000000000000.',
+  '.....3333300.',
+  '....33333300.',
+  '...303333300.',
+  '...333333300.',
+  '..3333333330.',
+  '...333333330.',
+  '....10333300.',
+  '.....333330..',
+  '......3330...'
+];
+
+/* ---------- Kapitel 1: Cellmate ---------- */
+function sceneG(g, t, preview) {
+  const dead = g.over;
+  // Wand & Mauerwerk
+  R(0, 0, 160, 128, 2);
+  for (let y = 6; y < 104; y += 10) for (let x = 0; x < 160; x += 2) if (((x >> 1) + (y >> 3)) % 9 !== 0) P(x, y, 1);
+  for (let y = 6; y < 104; y += 10) for (let x = ((y / 10 | 0) % 2) * 12; x < 160; x += 24) R(x, y + 1, 1, 9, 1);
+  // Boden
+  R(0, 104, 160, 24, 1); R(0, 104, 160, 1, 0);
+  for (let x = 0; x < 160; x += 16) R(x, 105, 1, 23, 0);
+  // Fenster mit Gittern
+  box(10, 12, 28, 24, 3, 0); R(10, 36, 28, 2, 1);
+  for (let x = 14; x < 38; x += 5) R(x, 13, 2, 22, 0);
+  R(11, 23, 26, 1, 0);
+  // Lichtstrahl
+  if (!dead) for (let y = 38; y < 128; y++) { const off = (y - 38) * 0.45 | 0;
+    for (let x = 12 + off; x < 38 + off; x++) if (((x & 1) === 0) && ((y & 1) === 0)) P(x, y, 3); }
+  // Pritsche
+  R(2, 88, 46, 4, 0); R(3, 86, 44, 3, 3); R(3, 85, 12, 2, 3); R(4, 92, 2, 12, 0); R(42, 92, 2, 12, 0);
+  D(4, 86, 40, 2, 2, 1);
+  // Regal mit vollendeten Heften
+  R(94, 44, 56, 2, 0); R(96, 46, 2, 4, 0); R(146, 46, 2, 4, 0);
+  const n = Math.min(g.hefte, 17);
+  for (let i = 0; i < n; i++) { const c = i % 2 ? 1 : 0, hgt = 9 + (i % 3);
+    R(96 + i * 3, 44 - hgt, 3, hgt, c); R(96 + i * 3, 44 - hgt, 3, 1, i % 2 ? 2 : 1); }
+  // Tisch
+  R(82, 78, 72, 6, 2); R(82, 78, 72, 1, 0); R(82, 84, 72, 4, 1); R(82, 88, 72, 1, 0);
+  R(86, 88, 3, 16, 0); R(148, 88, 3, 16, 0);
+  // Öllampe
+  const fl = (t >> 3) % 3;
+  R(140, 76, 8, 2, 0); R(142, 70, 4, 6, 1); R(141, 69, 6, 1, 0);
+  if (!dead) { R(143, 64 - (fl === 1 ? 1 : 0), 2, 5, 3); P(143 + (fl === 2 ? 1 : 0), 62, 3); D(136, 58, 16, 14, 3, t >> 4 & 1); }
+  // Papierstapel
+  const sheets = Math.ceil(g.paper / 14);
+  for (let i = 0; i < sheets; i++) { R(118, 77 - i * 2, 16, 2, 3); R(118, 78 - i * 2, 16, 1, 1); }
+  // aktuelles Blatt mit Schreibspuren
+  R(92, 79, 22, 4, 3); R(92, 83, 22, 1, 1);
+  const lines = Math.floor((g.progress / 100) * 18);
+  for (let i = 0; i < lines; i++) { const ln = i % 2, x = 94 + (i >> 1) * 2; P(x, 80 + ln, 1); P(x + 1, 80 + ln, (i % 3) ? 1 : 2); }
+  // Schemel
+  R(58, 89, 18, 3, 0); R(60, 92, 2, 12, 0); R(72, 92, 2, 12, 0);
+  // Gramsci
+  const weak = g.health < 30 || g.hunger < 20;
+  let droop = weak ? 2 : 0; let bob = (!dead && (t >> 5) % 2) ? 1 : 0;
+  if (weak && !dead && (t % 140) < 10) bob += (t & 2) ? 1 : 0; // Husten
+  if (dead) droop = 8;
+  // Beine
+  R(66, 85, 18, 4, 0); R(81, 88, 4, 15, 0); R(80, 102, 7, 2, 0);
+  // Körper
+  SP(GR_BODY, 60, 74 + bob, false);
+  const gxg = 63 + (dead ? 6 : 0), gyg = 61 + droop + bob;
+  SP(GR_HEAD, gxg, gyg, false);
+  // Rundbrille und kurzer Bart als wiedererkennbare Merkmale Gramscis
+  if (!dead) {
+    R(gxg + 2, gyg + 6, 4, 1, 0); R(gxg + 2, gyg + 6, 1, 3, 0); R(gxg + 5, gyg + 8, 1, 1, 0);
+    R(gxg + 8, gyg + 6, 4, 1, 0); R(gxg + 11, gyg + 6, 1, 3, 0); R(gxg + 8, gyg + 8, 1, 1, 0);
+    R(gxg + 6, gyg + 7, 2, 1, 0);
+    R(gxg + 4, gyg + 11, 7, 2, 0); R(gxg + 5, gyg + 13, 5, 1, 1);
+  }
+  // Arm & schreibende Hand
+  const writing = !dead && g.paper > 10;
+  const hx = writing ? 98 + ((t >> 2) % 10 < 5 ? (t >> 2) % 5 : 5 - (t >> 2) % 5) * 2 : 94;
+  const hy = writing && ((t >> 1) & 1) ? 77 : 78;
+  R(70, 77 + bob, 5, 6, 1); R(70, 77 + bob, 1, 6, 0);
+  R(73, 81, hx - 73, 3, 1); R(73, 80, hx - 73, 1, 0); R(73, 84, hx - 73, 1, 0);
+  R(hx, hy + 2, 3, 3, 3); R(hx, hy + 5, 3, 1, 0);
+  if (writing) { R(hx + 2, hy - 2, 1, 5, 0); P(hx + 3, hy - 3, 0); }
+  if (dead) { D(0, 0, 160, 128, 1, 0); }
+  // Aktions-Effekte
+  if (!preview) drawFxG(t);
+}
+function drawFxG(t) {
+  if (!fx.kind || fx.t <= 0) return;
+  const k = fx.t;
+  if (fx.kind === 'suppe') {
+    R(100, 74, 12, 2, 0); R(101, 76, 10, 2, 1); R(103, 78, 6, 1, 0); R(101, 73, 10, 1, 3);
+    for (let i = 0; i < 3; i++) { const y = 70 - ((t + i * 9) % 18); P(103 + i * 3 + ((y >> 2) & 1), y, 3); P(103 + i * 3, y - 1, 3); }
+  } else if (fx.kind === 'papier') {
+    const y = Math.min(70, 10 + (60 - k) * 3);
+    R(116, y, 20, 3, 3); R(116, y + 3, 20, 1, 0); R(115, y, 1, 3, 0); R(136, y, 1, 3, 0);
+  } else if (fx.kind === 'medizin') {
+    R(104, 66, 8, 12, 0); R(105, 68, 6, 9, 1); R(106, 64, 4, 2, 0); R(107, 62, 2, 2, 1);
+    R(107, 70, 2, 6, 3); R(105, 72, 6, 2, 3);
+    if ((t >> 2) & 1) { P(102, 64, 3); P(114, 66, 3); P(110, 60, 3); }
+  }
+}
+
+/* ---------- Kapitel 2: Nuremberg Nightshift ---------- */
+function sceneN(n, t, preview) {
+  const dark = n.light <= 0;
+  const flicker = !dark && n.light < H && ((t % 47) < 4 || (t % 113) < 3);
+  REMAP = dark ? [0, 1, 1, 2] : (flicker ? [0, 0, 1, 2] : [0, 1, 2, 3]);
+  // Wand & Boden
+  R(0, 0, 160, 128, 2);
+  for (let y = 0; y < 104; y += 4) D4(0, y, 122, 1, 1);
+  R(0, 104, 160, 24, 1); R(0, 104, 160, 1, 0);
+  for (let y = 108; y < 128; y += 6) R(0, y, 160, 1, 0);
+  // Kalender: 14 Prozesstage
+  const days = Math.floor(n.campaign / (24 * H));
+  for (let i = 0; i < 14; i++) { const x = 8 + (i % 7) * 6, y = 10 + Math.floor(i / 7) * 6;
+    box(x, y, 5, 5, i < days ? 0 : 3, 0); }
+  // Toilette (Ecke links)
+  R(6, 94, 12, 4, 3); R(6, 94, 12, 1, 0); R(8, 98, 8, 6, 1); R(8, 98, 1, 6, 0); R(15, 98, 1, 6, 0); R(10, 84, 4, 10, 1);
+  // kleiner Tisch mit Akte
+  R(104, 84, 18, 2, 0); R(106, 86, 2, 18, 0); R(118, 86, 2, 18, 0);
+  R(106, 80, 12, 4, 3); R(106, 80, 12, 1, 0); R(108, 82, 8, 1, 1);
+  // Tür mit Klappe
+  box(124, 18, 34, 87, 1, 0);
+  for (let y = 24; y < 100; y += 12) { P(127, y, 0); P(154, y, 0); }
+  R(128, 22, 26, 1, 2); R(128, 22, 1, 80, 2);
+  box(132, 42, 18, 12, 0, 0); R(133, 43, 16, 10, dark ? 0 : 3);
+  if (!dark) { R(135, 45, 12, 6, 2); circle(141, 48, 2, 3, true); }
+  R(150, 62, 3, 6, 0);
+  // Pritsche
+  R(22, 88, 80, 5, 3); R(22, 87, 80, 1, 0); R(22, 93, 80, 2, 0); R(24, 95, 3, 9, 0); R(97, 95, 3, 9, 0);
+  D(24, 88, 76, 4, 2, 0); R(24, 82, 16, 6, 3); R(24, 82, 16, 1, 1);
+  // Lichtkegel aus der Türklappe: klarer, breiter Reflex auf Boden und Görings Kleidung
+  if (!dark && !flicker) {
+    for (let x = 28; x < 132; x++) {
+      const d = 132 - x, top = 44 - d * 0.36, bot = 52 + d * 0.68;
+      for (let y = Math.max(0, top | 0); y < Math.min(128, bot); y++) {
+        if (((x + y) & 1) === 0) P(x, y, 3);
+        else if (((x + 2 * y) & 3) === 0) P(x, y, 2);
+      }
+    }
+    // harte Lichtkante direkt unter der Klappe
+    R(132, 54, 18, 2, 3); R(126, 56, 3, 2, 3);
+  }
+  // Göring sitzend
+  const bx = 62, by = 54, br = (t >> 5) % 2;
+  // Beine
+  R(bx - 12, by + 34, 11, 5, 0); R(bx + 1, by + 34, 11, 5, 0);
+  R(bx - 11, by + 39, 6, 11, 0); R(bx + 5, by + 39, 6, 11, 0);
+  R(bx - 13, by + 48, 9, 3, 0); R(bx + 4, by + 48, 9, 3, 0);
+  // Rumpf
+  for (let j = 0; j < 22; j++) { const w = 22 + Math.min(j, 4) * 2 + (j > 12 ? 2 : 0), x0 = bx - w / 2;
+    R(x0, by + 13 + j + br * (j < 3 ? 1 : 0), w, 1, 1); P(x0, by + 13 + j, 0); P(x0 + w - 1, by + 13 + j, 0); }
+  R(bx - 11, by + 13, 22, 1, 0);
+  for (let j = 0; j < 9; j++) { P(bx - 2 - (j >> 1), by + 14 + j, 2); P(bx + 1 + (j >> 1), by + 14 + j, 2); }
+  R(bx - 1, by + 14, 2, 4, 3);
+  for (let j = 0; j < 3; j++) { P(bx - 4, by + 24 + j * 4, 3); P(bx + 3, by + 24 + j * 4, 3); }
+  R(bx - 9, by + 23, 1, 12, 0); R(bx + 8, by + 23, 1, 12, 0);
+  R(bx - 15, by + 33, 5, 3, 3); R(bx + 10, by + 33, 5, 3, 3);
+  // breites, schweres Gesicht mit zurückweichendem Haaransatz und gesenktem Blick
+  const xh = bx - 9, yh = by + br;
+  R(xh + 2, yh, 14, 2, 0); R(xh, yh + 2, 18, 2, 0); R(xh + 1, yh + 4, 16, 7, 3);
+  R(xh, yh + 4, 1, 6, 0); R(xh + 17, yh + 4, 1, 6, 0);
+  // zurückweichende Schläfen und schwere Stirn
+  R(xh + 1, yh + 3, 3, 2, 0); R(xh + 14, yh + 3, 3, 2, 0);
+  R(xh + 3, yh + 5, 4, 1, 1); R(xh + 11, yh + 5, 4, 1, 1);
+  P(xh + 4, yh + 6, 0); P(xh + 12, yh + 6, 0);
+  R(xh + 8, yh + 6, 2, 3, 2); R(xh + 7, yh + 9, 4, 1, 2);
+  R(xh + 4, yh + 10, 10, 2, 2); R(xh + 6, yh + 11, 6, 1, 0);
+  // Kragen und Rangabzeichen ohne Emblem
+  R(bx - 10, by + 13, 4, 2, 3); R(bx + 6, by + 13, 4, 2, 3);
+  R(bx - 2, by + 13, 4, 5, 0); R(bx - 1, by + 14, 2, 2, 3);
+  R(bx - 9, by + 24, 2, 1, 3); R(bx + 8, by + 24, 2, 1, 3);
+  // versteckte Kapsel glimmt bei Gefahr
+  if (n.cyanide > 40 && ((t >> 3) & 1)) { REMAP = [0, 1, 2, 3]; P(30, 90, 3); P(31, 90, 3); P(30, 91, 3); }
+  REMAP = [0, 1, 2, 3];
+  if (dark) { // nur Umrisse sichtbar
+    D4(0, 0, 160, 128, 0);
+  }
+  if (!preview) drawFxN(t);
+}
+function drawFxN(t) {
+  if (!fx.kind || fx.t <= 0) return;
+  const k = fx.t;
+  if (fx.kind === 'filzen') {
+    const p = 1 - k / 60, x = 20 + Math.round(p * 90), y = 80 + Math.round(Math.sin(p * 12) * 10);
+    circle(x, y, 9, 3, false); circle(x, y, 8, 3, false);
+    for (let yy = -7; yy <= 7; yy++) for (let xx = -7; xx <= 7; xx++) if (xx * xx + yy * yy < 49 && ((x + xx + y + yy) & 1)) P(x + xx, y + yy, 3);
+  } else if (fx.kind === 'licht') {
+    if ((k >> 2) & 1) { R(133, 43, 16, 10, 3); for (let i = 0; i < 6; i++) R(120 - i * 6, 47 + (i % 2), 4, 1, 3); }
+  } else if (fx.kind === 'verhoer') {
+    box(52, 104, 40, 20, 3, 0); R(52, 104, 14, 3, 1); R(56, 110, 20, 1, 1); R(56, 113, 26, 1, 1); R(56, 116, 16, 1, 1);
+    const sy = k > 30 ? 84 + (60 - k) : 114 - Math.max(0, 30 - k) * 0;
+    R(78, sy - 10, 4, 8, 1); R(76, sy - 12, 8, 3, 0); R(75, sy - 2, 10, 4, 0);
+    if (k <= 30) { R(76, 117, 9, 4, 0); D(77, 118, 7, 2, 2, 0); }
+  }
+}
+
+/* ---------- Kapitel 3: 29 Minutes Later ---------- */
+function sceneE(e, t, preview) {
+  const sleeping = e.mode === 'schlafen', surfing = e.mode === 'surfen';
+  // linke Hälfte: Zelle
+  R(0, 0, 78, 128, 2);
+  for (let y = 4; y < 100; y += 8) for (let x = ((y >> 3) % 2) * 6; x < 78; x += 12) { R(x, y, 11, 1, 1); }
+  R(0, 100, 78, 28, 1); R(0, 100, 78, 1, 0);
+  // hoch sitzendes vergittertes Fenster: enge Stadtschlucht von Lower Manhattan
+  box(5, 12, 34, 20, 0, 0); R(6, 13, 32, 18, 2);
+  R(8, 22, 4, 9, 1); R(13, 18, 5, 13, 1); R(19, 21, 4, 10, 1);
+  R(24, 16, 5, 15, 1); R(30, 20, 5, 11, 1);
+  R(24, 14, 2, 2, 0); R(26, 12, 2, 4, 0); R(28, 15, 2, 2, 0);
+  for (let x = 9; x < 37; x += 7) R(x, 12, 1, 20, 0);
+  R(5, 21, 34, 1, 0);
+  // Kamera und schwerer Tuerrahmen bilden die institutionelle MCC-Zelle
+  R(56, 6, 15, 6, 0); R(58, 7, 10, 4, 1); R(59, 8, 4, 2, 0); R(69, 12, 2, 4, 0); R(66, 4, 8, 2, 0);
+  const camOn = !sleeping && !surfing && !e.over;
+  if (camOn && ((t >> 4) & 1)) P(60, 8, 3);
+  // Etagenbett
+  R(6, 52, 46, 3, 0); R(6, 50, 46, 2, 3); R(6, 82, 46, 3, 0); R(6, 79, 46, 3, 3);
+  R(5, 40, 2, 64, 0); R(51, 40, 2, 64, 0); D(8, 79, 42, 2, 2, 0);
+  // Epstein in der Zelle: sitzende, nach vorn geneigte Silhouette
+  const ex = 29, ey = 54, br = (t >> 5) % 2;
+  if (!(e.over && e.reason === 'gefahr')) {
+    // breite Schultern der Gefängniskleidung und nach vorn fallende Haltung
+    R(ex - 14, ey + 15 + br, 28, 23, 1); R(ex - 14, ey + 15, 28, 1, 0);
+    R(ex - 14, ey + 16, 1, 21, 0); R(ex + 13, ey + 16, 1, 21, 0);
+    R(ex - 10, ey + 18, 20, 2, 2); R(ex - 2, ey + 17, 4, 8, 3);
+    R(ex - 12, ey + 23, 6, 2, 0); R(ex + 6, ey + 23, 6, 2, 0);
+    // Unterarme auf den Knien
+    R(ex - 13, ey + 33, 11, 4, 1); R(ex + 2, ey + 33, 11, 4, 1);
+    R(ex - 4, ey + 34, 8, 3, 3);
+    // Beine und Schuhe auf der Pritsche
+    R(ex - 12, ey + 38, 10, 4, 1); R(ex + 2, ey + 38, 10, 4, 1);
+    R(ex - 11, ey + 42, 5, 11, 1); R(ex + 5, ey + 42, 5, 11, 1);
+    R(ex - 13, ey + 52, 8, 2, 0); R(ex + 3, ey + 52, 8, 2, 0);
+    // Kopf: langere Stirn, zurueckgekaemmtes Haar, markante Nase und schmale Mundlinie
+    SP(EP_HEAD, ex - 9, ey + br, false);
+    // angespannte Augen und Schatten unter den Augen
+    P(ex - 3, ey + 7 + br, 0); P(ex + 4, ey + 7 + br, 0);
+    P(ex - 4, ey + 9 + br, 2); P(ex + 5, ey + 9 + br, 2);
+  } else {
+    // die Pritsche bleibt leer, nur die zerknitterte Decke ist zu sehen
+    R(8, 76, 40, 3, 1); D(10, 74, 36, 2, 2, t >> 3 & 1);
+  }
+  // Zellentür-Gitter vorn
+  for (let x = 2; x < 78; x += 7) R(x, 0, 2, 100, 0);
+  R(0, 30, 78, 2, 0);
+  // Gefahr verdunkelt die Zelle
+  if (e.danger > 50) D4(0, 0, 78, 100, 0);
+  if (e.danger > 80) D(0, 0, 78, 100, 0, t >> 3 & 1);
+  if (e.over && e.reason === 'gefahr') R(0, 0, 78, 100, 0);
+  // Trennwand
+  R(78, 0, 3, 128, 0);
+  // rechte Hälfte: Wachraum
+  R(81, 0, 79, 128, 2); R(81, 100, 79, 28, 1); R(81, 100, 79, 1, 0);
+  for (let y = 10; y < 100; y += 14) D4(82, y, 78, 1, 1);
+  // Wanduhr: zeigt Schichtfortschritt
+  circle(98, 20, 9, 3, true); circle(98, 20, 9, 0, false);
+  for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; P(98 + Math.round(Math.sin(a) * 7), 20 - Math.round(Math.cos(a) * 7), 1); }
+  const a1 = (e.shift / CFG.e.shift) * Math.PI * 2, a2 = (t / 240) * Math.PI * 2;
+  for (let r = 0; r < 5; r++) P(98 + Math.round(Math.sin(a1) * r), 20 - Math.round(Math.cos(a1) * r), 0);
+  for (let r = 0; r < 7; r++) P(98 + Math.round(Math.sin(a2) * r), 20 - Math.round(Math.cos(a2) * r), 1);
+  // Schreibtisch
+  R(84, 84, 74, 4, 0); R(85, 82, 72, 2, 1); R(88, 88, 3, 12, 0); R(152, 88, 3, 12, 0);
+  // Monitor
+  box(98, 56, 30, 22, 0, 0); R(110, 78, 6, 4, 0); R(106, 81, 14, 2, 0);
+  const sx = 100, sy = 58, sw = 26, sh = 18;
+  if (surfing) {
+    R(sx, sy, sw, sh, 3); R(sx, sy, sw, 3, 1);
+    for (let i = 0; i < 5; i++) { const yy = sy + 5 + ((i * 4 + (t >> 2)) % 13); R(sx + 2, yy, 8 + (i * 5) % 14, 2, i % 2 ? 1 : 2); }
+    R(sx + 18, sy + 6, 6, 6, 2);
+    const mx = sx + 6 + ((t >> 3) % 14), my = sy + 8 + ((t >> 4) % 6);
+    P(mx, my, 0); P(mx, my + 1, 0); P(mx + 1, my + 1, 0); P(mx, my + 2, 0); P(mx + 2, my + 2, 0);
+  } else if (sleeping || e.danger > 80) {
+    for (let y = 0; y < sh; y++) for (let x = 0; x < sw; x++) P(sx + x, sy + y, ((x * 7 + y * 13 + t * 3) % 5) < 2 ? 3 : 1);
+  } else {
+    R(sx, sy, sw, sh, 1); for (let x = sx + 1; x < sx + sw; x += 4) R(x, sy, 1, sh, 0);
+    R(sx + 9, sy + 6, 4, 4, 3); R(sx + 8, sy + 10, 6, 6, 2);
+    if ((t >> 4) & 1) P(sx + sw - 3, sy + 2, 3);
+  }
+  // Logbuch
+  R(86, 79, 20, 4, 3); R(95, 79, 2, 4, 1); R(86, 83, 20, 1, 0);
+  for (let i = 0; i < 3; i++) { R(88, 80 + i, 5, 1, 1); R(98, 80 + i, 5 - (i === 2 ? 2 : 0), 1, 1); }
+  // Kaffeebecher
+  R(134, 76, 6, 6, 3); R(134, 76, 1, 6, 0); R(139, 76, 1, 6, 0); R(134, 82, 6, 1, 0); R(140, 78, 2, 2, 0);
+  if (!sleeping) { const st = (t >> 3) % 6; P(136, 73 - (st % 3), 3); P(137, 71 - (st % 2), 3); }
+  // Wärter (Blick nach links)
+  const gx = 140, gy = sleeping ? 70 : 56;
+  R(gx - 2, 70, 16, 14, 1); R(gx - 2, 70, 1, 14, 0); R(gx + 13, 70, 1, 14, 0); R(gx + 6, 72, 3, 3, 3);
+  R(gx + 1, 84, 12, 4, 0); R(gx + 2, 88, 4, 12, 0); R(gx, 98, 7, 2, 0);
+  R(144, 89, 12, 2, 0); R(146, 91, 2, 9, 0); R(153, 91, 2, 9, 0);
+  if (sleeping) {
+    SP(GU_HEAD, gx - 6, gy + 4, false);
+    R(gx - 14, 79, 14, 3, 1);
+    for (let i = 0; i < 3; i++) { const yy = 68 - ((t + i * 20) % 60) / 3; circle(gx - 6 + i * 3, Math.round(yy), 1 + i % 2, 3, false); }
+  } else {
+    SP(GU_HEAD, gx - 2, gy + ((t >> 6) % 2), false);
+    const hx = surfing ? 124 + ((t >> 3) % 3) : (fx.kind === 'logbuch' && fx.t > 0 ? 98 + ((t >> 1) % 6) : 118);
+    R(hx, 76, gx - hx, 3, 1); R(hx, 75, gx - hx, 1, 0);
+    R(hx - 3, 75, 4, 4, 3);
+    if (surfing) { R(hx - 6, 79, 5, 3, 0); }
+  }
+  if (!preview) drawFxE(t);
+}
+function drawFxE(t) {
+  if (!fx.kind || fx.t <= 0) return;
+  if (fx.kind === 'logbuch') {
+    const k = fx.t; if (k < 40) { P(98, 81, 0); P(99, 82, 0); P(100, 81, 0); P(101, 80, 0); P(102, 79, 0); }
+  } else if (fx.kind === 'schicht') {
+    if ((fx.t >> 2) & 1) { circle(98, 20, 11, 3, false); circle(98, 20, 12, 1, false); }
+  }
+}
+
+/* ---------- Menü-Vorschau ---------- */
+function sceneMenu(t) {
+  const st = [S.g, S.n, S.e][S.sel];
+  const demo = st.started ? st : [Object.assign(newG(), { started: true, hefte: 5 }), Object.assign(newN(), { started: true }), Object.assign(newE(), { started: true })][S.sel];
+  if (S.sel === 0) sceneG(demo, t, true); else if (S.sel === 1) sceneN(demo, t, true); else sceneE(demo, t, true);
+  REMAP = [0, 1, 2, 3];
+  R(0, 0, 160, 2, 0); R(0, 126, 160, 2, 0); R(0, 0, 2, 128, 0); R(158, 0, 2, 128, 0);
+}
+function render(t) {
+  REMAP = [0, 1, 2, 3];
+  if (S.ch === -1) sceneMenu(t);
+  else if (S.ch === 0) sceneG(S.g, t, false);
+  else if (S.ch === 1) sceneN(S.n, t, false);
+  else sceneE(S.e, t, false);
+  REMAP = [0, 1, 2, 3];
+}
+</script>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+cx = $('screen').getContext('2d');
+cx.imageSmoothingEnabled = false;
+
+/* ---------- Audio ---------- */
+let AC = null;
+function audio() { if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { } } if (AC && AC.state === 'suspended') AC.resume(); return AC; }
+function tone(f, d, type, when) {
+  const a = audio(); if (!a) return; const t0 = a.currentTime + (when || 0);
+  const o = a.createOscillator(), g = a.createGain(); o.type = type || 'square'; o.frequency.setValueAtTime(f, t0);
+  g.gain.setValueAtTime(0.07, t0); g.gain.exponentialRampToValueAtTime(0.0008, t0 + d); o.connect(g); g.connect(a.destination); o.start(t0); o.stop(t0 + d + 0.02);
+}
+const SFX = {
+  A: () => { tone(523, .07); tone(784, .06, 'square', .06); },
+  B: () => { tone(392, .07); tone(587, .06, 'square', .06); },
+  C: () => { tone(659, .06); tone(988, .08, 'square', .05); },
+  bad: () => { tone(220, .15); tone(165, .25, 'square', .14); },
+  good: () => { [523, 659, 784, 1047].forEach((f, i) => tone(f, .09, 'square', i * .08)); },
+  nav: () => tone(880, .04)
+};
+
+/* ---------- Speichern ---------- */
+function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify({ time: Date.now(), S })); } catch (e) { } }
+function load() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY); if (!raw) return;
+    const d = JSON.parse(raw); if (!d || !d.S) return;
+    S = Object.assign(S, d.S);
+    S.g = Object.assign(newG(), d.S.g); S.n = Object.assign(newN(), d.S.n); S.e = Object.assign(newE(), d.S.e);
+    const away = (Date.now() - (d.time || Date.now())) / 1000;
+    if (away > 1) { const before = snapshot(); simulate(away); awayReport(away, before); }
+  } catch (e) { }
+}
+function snapshot() { return { g: S.g.over, n: S.n.over, e: S.e.over, shifts: S.e.shifts, hefte: S.g.hefte }; }
+let pendingAway = null;
+function awayReport(sec, b) {
+  if (sec < 600) return;
+  const lines = [];
+  if (S.g.started) lines.push(S.g.over && !b.g ? 'Cellmate: Gramsci hat deine Abwesenheit nicht überlebt.' : (S.g.hefte > b.hefte ? 'Cellmate: ' + (S.g.hefte - b.hefte) + ' neue Hefte vollendet.' : ''));
+  if (S.n.started && S.n.over && !b.n) lines.push(S.n.won ? 'Nightshift: Das Urteil ist gefallen.' : 'Nightshift: Göring hat das Zyankali benutzt.');
+  if (S.e.started) { if (S.e.over && !b.e) lines.push('29 Minutes Later: Deine Schicht ist gescheitert.'); else if (S.e.shifts > b.shifts) lines.push('29 Minutes Later: ' + (S.e.shifts - b.shifts) + ' Schicht(en) überstanden.'); }
+  const l = lines.filter(Boolean); if (!l.length) return;
+  pendingAway = '<h2>Während du weg warst</h2><p>' + fmt(sec) + ' sind vergangen.</p>' + l.map(x => '<p>' + x + '</p>').join('') + '<div class="hint">Taste drücken</div>';
+}
+
+/* ---------- Format ---------- */
+function fmt(s) { s = Math.max(0, s); const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / H), m = Math.floor(s % H / 60);
+  return d ? d + 'T ' + h + 'h' : (h ? h + 'h ' + String(m).padStart(2, '0') + 'm' : m + 'm'); }
+
+/* ---------- Texte ---------- */
+const INFO = [
+  `<h2>Cellmate</h2><p><b>Turi, 1928.</b> Antonio Gramsci ist inhaftiert, krank und isoliert. Halte den Denker am Leben, damit er seine Gefängnishefte schreiben kann.</p>
+   <p><b>Ziel:</b> So viele Gefängnishefte wie möglich vollenden. Das Spiel läuft endlos, solange Gramsci lebt.</p>
+   <p><b>Verfall:</b> Hunger leert sich in ca. 8 Stunden, Papier reicht ca. 10 Stunden. Hungert er, sinkt die Gesundheit dreimal so schnell. Bei Hunger oder Gesundheit 0 stirbt er.</p>
+   <p><b>Schreiben:</b> Bei mehr als 10 % Papier wächst das Heft, ein Heft dauert ca. 6 Stunden.</p>
+   <div class="keys"><b>A</b><span>Suppe – Hunger +30</span><b>B</b><span>Papier – Papier +35</span><b>C</b><span>Medizin – Gesundheit +25</span></div>`,
+  `<h2>The Nuremberg Nightshift</h2><p><b>Nürnberg, 1946.</b> Du bist alliierter Wärter vor Hermann Görings Zelle. Verhindere seinen Suizid durch Zyankali, bis das Urteil gefällt ist.</p>
+   <p><b>Ziel:</b> 14 Prozesstage (336 Stunden) überstehen. Die Zeit läuft nur, solange die Zelle beleuchtet ist.</p>
+   <p><b>Verfall:</b> Der Scheinwerfer hält ca. 6 Stunden. Im Dunkeln steigt die Zyankali-Gefahr um 15 % pro Stunde, sonst um 2 %. Bei 100 % ist alles verloren.</p>
+   <div class="keys"><b>A</b><span>Licht – Scheinwerfer wieder 6 Std.</span><b>B</b><span>Filzen – Zyankali-Gefahr −30 %</span><b>C</b><span>Verhör – Prozess +6 Std., Gefahr +10 %, einmal pro Stunde</span></div>`,
+  `<h2>29 Minutes Later</h2><p><b>New York, MCC, 2019.</b> Schwarze Satire auf das Kontrollversagen der Wärter in der Nacht von Jeffrey Epsteins Tod.</p>
+   <p><b>Ziel:</b> Möglichst viele 72-Stunden-Schichten überstehen. Der Zähler zeigt, wie viele Schichten Epstein unter deiner Aufsicht überlebt hat.</p>
+   <p><b>Verfall:</b> Das Logbuch muss alle 4 Stunden aktualisiert werden, sonst wirst du suspendiert. Deine Energie reicht ca. 6 Stunden Wachphase. Surfen und Schlafen laden Energie auf, lassen die Zelle aber unbeobachtet – die Gefahr steigt.</p>
+   <div class="keys"><b>A</b><span>Surfen an/aus – Energie +25/h, Gefahr +10/h</span><b>B</b><span>Schlafen an/aus – Energie +50/h, Gefahr +20/h</span><b>C</b><span>Logbuch – Frist wieder 4 Std., Gefahr −10 % (max. einmal pro Stunde)</span></div>`
+];
+const MENU_INFO = `<h2>PixelPrisoner</h2><p>Drei Gefängnis-Tamagotchis, die in Echtzeit weiterlaufen – auch wenn die App geschlossen ist.</p>
+  <div class="keys"><b>A</b><span>Szenario wählen</span><b>B</b><span>Starten</span><b>C</b><span>Erklärung zum gewählten Szenario</span></div>
+  <p>MENÜ oben links bringt dich jederzeit zurück, INFO erklärt das aktuelle Szenario.</p>`;
+
+/* ---------- UI ---------- */
+function showPopup(html, onClose) { popup = { onClose }; $('overlay').innerHTML = html + (html.includes('class="hint"') ? '' : '<div class="hint">Taste drücken</div>'); $('overlay').classList.add('on'); }
+function closePopup() { const p = popup; popup = null; $('overlay').classList.remove('on'); if (p && p.onClose) p.onClose(); }
+let toastT = 0;
+function toast(msg) { $('toast').textContent = msg; $('toast').classList.add('on'); toastT = 150; }
+function onEvent(k) { if (k === 'heft' && S.ch === 0) { toast('Gefängnisheft vollendet'); SFX.good(); }
+  if (k === 'schicht' && S.ch === 2) { toast('Schicht überstanden: ' + S.e.shifts); fx = { kind: 'schicht', t: 90 }; SFX.good(); } }
+
+function bar(label, v, txt, warn) { return `<div class="row"><span>${label}</span><div class="bar${warn ? ' warn' : ''}"><i style="width:${clamp(v, 0, 100).toFixed(1)}%"></i></div><span>${txt}</span></div>`; }
+let lastPanel = '';
+function setPanel(h) { if (h !== lastPanel) { $('panel').innerHTML = h; lastPanel = h; } }
+function labels(a, b, c, act) { $('lA').textContent = a; $('lB').textContent = b; $('lC').textContent = c;
+  ['bA', 'bB', 'bC'].forEach((id, i) => $(id).classList.toggle('active', act === i)); }
+
+function updateUI() {
+  if (S.ch === -1) {
+    $('title').textContent = 'Hauptmenü'; $('subtitle').textContent = PLACES[S.sel];
+    const st = i => { const s = [S.g, S.n, S.e][i];
+      if (!s.started) return 'neu';
+      if (i === 0) return s.over ? 'tot · ' + s.hefte + ' Hefte' : s.hefte + ' Hefte';
+      if (i === 1) return s.over ? (s.won ? 'Urteil' : 'verloren') : 'Tag ' + (Math.floor(s.campaign / 86400) + 1) + '/14';
+      return s.over ? 'gescheitert · ' + s.shifts : s.shifts + ' Schichten'; };
+    setPanel('<div class="menu">' + NAMES.map((n, i) => `<div class="item${i === S.sel ? ' sel' : ''}"><span>${i + 1}. ${n}</span><small>${st(i)}</small></div>`).join('') + '</div>');
+    labels('Wählen', 'Start', 'Erklärung');
+    return;
+  }
+  $('title').textContent = NAMES[S.ch]; $('subtitle').textContent = PLACES[S.ch];
+  if (S.ch === 0) { const g = S.g;
+    setPanel(`<div class="big"><span>Gefängnishefte</span><b>${g.hefte}</b></div>` +
+      bar('Hunger', g.hunger, Math.ceil(g.hunger) + '%', g.hunger < 20) + bar('Papier', g.paper, Math.ceil(g.paper) + '%', g.paper <= 10) +
+      bar('Gesundheit', g.health, Math.ceil(g.health) + '%', g.health < 25) + bar('Heft', g.progress, Math.floor(g.progress) + '%', false) +
+      `<div class="state">${g.over ? 'Gramsci ist tot · Rekord ' + g.best : (g.paper <= 10 ? 'Kein Papier – er kann nicht schreiben' : (g.hunger < 20 ? 'Er hungert' : 'Er schreibt'))}</div>`);
+    if (g.over) labels('Menü', 'Neustart', 'Info'); else labels('Suppe', 'Papier', 'Medizin');
+  } else if (S.ch === 1) { const n = S.n;
+    const day = Math.min(14, Math.floor(n.campaign / 86400) + 1);
+    setPanel(`<div class="big"><span>Bis zum Urteil</span><b>${fmt(CFG.n.campaign - n.campaign)}</b></div>` +
+      bar('Licht', n.light / CFG.n.light * 100, fmt(n.light), n.light < H) + bar('Zyankali', n.cyanide, Math.floor(n.cyanide) + '%', n.cyanide > 60) +
+      bar('Prozess', n.campaign / CFG.n.campaign * 100, 'Tag ' + day, false) +
+      `<div class="state">${n.over ? (n.won ? 'Urteil gefällt – Wache beendet' : 'Suizid in der Zelle – verloren') : (n.light <= 0 ? 'Dunkelheit! Der Prozess steht still' : (n.verhoerCd > 0 ? 'Nächstes Verhör in ' + fmt(n.verhoerCd) : 'Verhör möglich'))}</div>`);
+    if (n.over) labels('Menü', 'Neustart', 'Info'); else labels('Licht', 'Filzen', 'Verhör');
+  } else { const e = S.e;
+    setPanel(`<div class="big"><span>Überlebte Schichten</span><b>${e.shifts}</b></div>` +
+      bar('Logbuch', e.log / CFG.e.log * 100, fmt(e.log), e.log < H) + bar('Energie', e.energy, Math.floor(e.energy) + '%', e.energy < 20) +
+      bar('Gefahr', e.danger, Math.floor(e.danger) + '%', e.danger > 70) + bar('Schicht', e.shift / CFG.e.shift * 100, fmt(CFG.e.shift - e.shift), false) +
+      `<div class="state">${e.over ? ({ log: 'Logbuch versäumt – suspendiert', energie: 'Im Dienst zusammengebrochen – suspendiert', gefahr: 'Niemand hat hingesehen' })[e.reason] + ' · Rekord ' + e.best : ({ wach: 'Wärter wach', surfen: 'Wärter surft – Zelle unbeobachtet', schlafen: 'Wärter schläft – Zelle unbeobachtet' })[e.mode]}</div>`);
+    if (e.over) labels('Menü', 'Neustart', 'Info'); else labels('Surfen', 'Schlafen', 'Logbuch', e.mode === 'surfen' ? 0 : (e.mode === 'schlafen' ? 1 : -1));
+  }
+}
+
+function openChapter(i) {
+  S.ch = i; fx = { kind: '', t: 0 };
+  const st = [S.g, S.n, S.e][i];
+  if (!S.seen[i]) showPopup(INFO[i] + '<div class="hint">Taste drücken zum Start</div>', () => { S.seen[i] = true; st.started = true; save(); });
+  else st.started = true;
+  updateUI(); save();
+}
+function goMenu() { S.ch = -1; fx = { kind: '', t: 0 }; updateUI(); save(); }
+function restart() {
+  if (S.ch === 0) { const b = S.g.best; S.g = newG(); S.g.best = b; S.g.started = true; }
+  if (S.ch === 1) { S.n = newN(); S.n.started = true; }
+  if (S.ch === 2) { const b = S.e.best; S.e = newE(); S.e.best = b; S.e.started = true; }
+  SFX.good(); updateUI(); save();
+}
+function act(k) {
+  if (popup) { SFX.nav(); closePopup(); updateUI(); return; }
+  SFX[k]();
+  if (S.ch === -1) {
+    if (k === 'A') S.sel = (S.sel + 1) % 3;
+    else if (k === 'B') openChapter(S.sel);
+    else showPopup(INFO[S.sel]);
+    updateUI(); save(); return;
+  }
+  const st = [S.g, S.n, S.e][S.ch];
+  if (st.over) { if (k === 'A') goMenu(); else if (k === 'B') restart(); else showPopup(INFO[S.ch]); return; }
+  if (S.ch === 0) { const g = S.g;
+    if (k === 'A') { g.hunger = clamp(g.hunger + 30, 0, 100); fx = { kind: 'suppe', t: 90 }; }
+    if (k === 'B') { g.paper = clamp(g.paper + 35, 0, 100); fx = { kind: 'papier', t: 60 }; }
+    if (k === 'C') { g.health = clamp(g.health + 25, 0, 100); fx = { kind: 'medizin', t: 80 }; }
+  } else if (S.ch === 1) { const n = S.n;
+    if (k === 'A') { n.light = CFG.n.light; fx = { kind: 'licht', t: 40 }; }
+    if (k === 'B') { n.cyanide = clamp(n.cyanide - 30, 0, 100); fx = { kind: 'filzen', t: 60 }; }
+    if (k === 'C') { if (n.verhoerCd > 0) { SFX.bad(); toast('Verhör erst wieder in ' + fmt(n.verhoerCd)); }
+      else { n.campaign = Math.min(CFG.n.campaign, n.campaign + CFG.n.verhoerGain); n.cyanide = clamp(n.cyanide + 10, 0, 100); n.verhoerCd = CFG.n.verhoerCd; fx = { kind: 'verhoer', t: 60 }; } }
+  } else { const e = S.e;
+    if (k === 'A') e.mode = e.mode === 'surfen' ? 'wach' : 'surfen';
+    if (k === 'B') e.mode = e.mode === 'schlafen' ? 'wach' : 'schlafen';
+    if (k === 'C') { e.log = CFG.e.log; e.mode = 'wach'; if (e.logCd <= 0) { e.danger = clamp(e.danger - 10, 0, 100); e.logCd = CFG.e.logCd; } fx = { kind: 'logbuch', t: 60 }; }
+  }
+  stepG(S.g, 0); stepN(S.n, 0); stepE(S.e, 0);
+  updateUI(); save();
+}
+
+/* ---------- Eingabe ---------- */
+function bindKey(id, k) {
+  const el = $(id);
+  const down = ev => { ev.preventDefault(); el.classList.add('press'); act(k); };
+  const up = ev => { ev.preventDefault(); el.classList.remove('press'); };
+  el.addEventListener('pointerdown', down); el.addEventListener('pointerup', up); el.addEventListener('pointerleave', up); el.addEventListener('pointercancel', up);
+  el.addEventListener('contextmenu', e => e.preventDefault());
+}
+bindKey('bA', 'A'); bindKey('bB', 'B'); bindKey('bC', 'C');
+$('menuBtn').addEventListener('pointerdown', e => { e.preventDefault(); SFX.nav(); if (popup) closePopup(); goMenu(); });
+$('infoBtn').addEventListener('pointerdown', e => { e.preventDefault(); SFX.nav(); if (popup) { closePopup(); return; } showPopup(S.ch === -1 ? MENU_INFO : INFO[S.ch]); });
+$('overlay').addEventListener('pointerdown', e => { if (e.target.closest('.hint')) closePopup(); });
+document.addEventListener('keydown', e => { const k = { a: 'A', b: 'B', c: 'C', '1': 'A', '2': 'B', '3': 'C' }[e.key.toLowerCase()]; if (k) act(k); });
+document.addEventListener('touchmove', e => { if (!e.target.closest('.overlay')) e.preventDefault(); }, { passive: false });
+document.addEventListener('gesturestart', e => e.preventDefault());
+document.addEventListener('dblclick', e => e.preventDefault());
+document.addEventListener('visibilitychange', () => { if (document.hidden) save(); else { resume(); } });
+window.addEventListener('pagehide', save);
+
+/* ---------- Icon ---------- */
+(function icon() {
+  const c = document.createElement('canvas'); c.width = c.height = 180; const x = c.getContext('2d'); const old = cx; cx = x;
+  x.fillStyle = PAL[1]; x.fillRect(0, 0, 180, 180);
+  x.fillStyle = PAL[0]; x.fillRect(20, 20, 140, 140); x.fillStyle = PAL[3]; x.fillRect(30, 30, 120, 120);
+  x.save(); x.translate(34, 34); x.scale(8, 8); REMAP = [0, 1, 2, 3]; SP(GR_HEAD, -1, 0, false); x.restore();
+  x.fillStyle = PAL[0]; for (let i = 0; i < 6; i++) x.fillRect(36 + i * 20, 30, 8, 120);
+  cx = old; const u = c.toDataURL('image/png'); $('touchIcon').href = u; $('favIcon').href = u;
+})();
+
+/* ---------- Schleife ---------- */
+let last = Date.now(), acc = 0;
+function resume() { const now = Date.now(), away = (now - last) / 1000; if (away > 2) simulate(away); last = now; updateUI(); }
+function frame() {
+  const now = Date.now(); let dt = (now - last) / 1000; last = now;
+  if (dt > 2) simulate(dt); else { stepG(S.g, dt); stepN(S.n, dt); stepE(S.e, dt); }
+  tick++; if (fx.t > 0) fx.t--;
+  if (toastT > 0 && --toastT === 0) $('toast').classList.remove('on');
+  render(tick);
+  if (tick % 15 === 0) updateUI();
+  if (tick % 300 === 0) save();
+  requestAnimationFrame(frame);
+}
+load();
+if (S.ch !== -1 && ![S.g, S.n, S.e][S.ch].started) S.ch = -1;
+updateUI();
+if (pendingAway) showPopup(pendingAway);
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
