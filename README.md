@@ -1,12 +1,12 @@
 # Pixel Prisoner
 
-**Drei Gefängnis-Tamagotchis im Retro-Handheld-Look, die in Echtzeit weiterlaufen – auch wenn die App geschlossen ist.**
+**Ein historisches Lernspiel im Retro-Handheld-Look – eine Hommage an die virtuellen Haustiere der 90er-Jahre. Drei Szenarien aus der Geschichte laufen in Echtzeit weiter, auch wenn die App geschlossen ist.**
 
-> ⚠️ **Experimentelles, nicht-kommerzielles Hobbyprojekt.** Pixel Prisoner ist ein künstlerisches Experiment mit historischen Stoffen und schwarzem Humor. Es wird nicht verkauft, enthält keine Werbung, sammelt keine Daten und verfolgt keinerlei kommerzielle Absichten. Funktionen, Spielbalance und Inhalte können sich jederzeit ändern.
+> ⚠️ **Experimentelles, nicht-kommerzielles Hobbyprojekt.** Pixel Prisoner ist ein künstlerisches und edukatives Experiment mit historischen Stoffen. Es wird nicht verkauft, enthält keine Werbung, sammelt keine Daten und verfolgt keinerlei kommerzielle Absichten. Funktionen, Spielbalance und Inhalte können sich jederzeit ändern.
 
 ## Worum geht es?
 
-Pixel Prisoner ist ein kleines Browserspiel nach dem Prinzip virtueller Haustiere: Werte sinken mit der Zeit, und du musst dich regelmäßig kümmern. Die Zeit läuft dabei in **Echtzeit** weiter. Wer die Seite schließt und später zurückkommt, bekommt eine Zusammenfassung dessen, was in der Zwischenzeit passiert ist.
+Pixel Prisoner ist ein kleines historisches Browserspiel, das spielerisch Zugang zu drei Episoden der Zeitgeschichte schaffen will. Es ist eine Hommage an die virtuellen Haustiere der 90er-Jahre und übernimmt deren Prinzip: Werte sinken mit der Zeit, und du musst dich regelmäßig kümmern. Die Zeit läuft dabei in **Echtzeit** weiter. Wer die Seite schließt und später zurückkommt, bekommt eine Zusammenfassung dessen, was in der Zwischenzeit passiert ist.
 
 Statt eines Haustiers betreust du historische Häftlinge in drei Szenarien:
 
@@ -39,7 +39,7 @@ Der Spielstand wird ausschließlich lokal im Browser (`localStorage`) gespeicher
 
 **Pixel Prisoner bindet keinen Code, keine Grafiken, Sounds oder Schriften Dritter ein.** Es gibt daher keine fremden Lizenzen, deren Hinweise hier wiedergegeben werden müssten. Folgende Bezüge und Inspirationen seien dennoch transparent genannt:
 
-- **Tamagotchi** ist eine eingetragene Marke der BANDAI Co., Ltd. Der Begriff wird hier nur beschreibend für das Spielprinzip „virtuelles Haustier“ verwendet. Pixel Prisoner steht in keiner Verbindung zu BANDAI und wird von BANDAI weder unterstützt noch autorisiert.
+- **Tamagotchi** ist eine eingetragene Marke der BANDAI Co., Ltd. Pixel Prisoner versteht sich als Hommage an das Spielprinzip „virtuelles Haustier“, das durch das Tamagotchi bekannt wurde. Das Projekt steht in keiner Verbindung zu BANDAI und wird von BANDAI weder unterstützt noch autorisiert.
 - **Game Boy** ist eine eingetragene Marke von Nintendo. Die grüne Vierfarb-Palette und das Handheld-Design sind lediglich von der Optik früher Handheld-Konsolen inspiriert. Es werden keine Nintendo-Assets verwendet; es besteht keine Verbindung zu Nintendo.
 - **Antonio Gramscis *Quaderni del carcere*** (Gefängnishefte) werden nur als historischer Bezug genannt, nicht zitiert.
 
